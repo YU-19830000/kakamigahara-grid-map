@@ -1,0 +1,17 @@
+各務原市 1kmグリッド生成結果
+==============================
+作成日時: 2026-04-26T03:01:23
+入力ファイル: /Users/uppine8/programing/kakamigahara-grid-map/data/kakamigahara_boundary.geojson
+全グリッド数: 187
+各務原市にかかるグリッド数: 116
+グリッドサイズ: 1000m x 1000m
+
+出力ファイル:
+- kakamigahara_boundary_6675_python.geojson
+- kakamigahara_grid_all_6675_python.geojson
+- kakamigahara_grid_6675_python.geojson
+- kakamigahara_grid.geojson
+
+備考:
+grid_id は北から南、西から東の順に G-001 から付番しています。
+kakamigahara_grid.geojson はWeb地図表示用のEPSG:4326相当です。

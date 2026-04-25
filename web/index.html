@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>各務原市 1kmグリッドマップ</title>
+    <meta name="theme-color" content="#102a43" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="グリッドMap" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="header-text">
+      <h1>各務原市 1kmグリッドマップ</h1>
+      <p>通信不感地帯調査・第1版</p>
+    </div>
+
+    <div class="status-badge" id="loadStatus">読込中</div>
+  </header>
+
+  <main class="app-main">
+    <div id="map"></div>
+
+    <button id="locateButton" class="locate-button" type="button">
+      現在地
+    </button>
+
+    <button id="markerListButton" class="marker-list-button" type="button">
+      記録一覧
+    </button>
+
+    <button id="syncButton" class="sync-button" type="button">
+      同期
+    </button>
+  </main>
+
+  <footer class="app-footer">
+    <span>背景地図：国土地理院 標準地図</span>
+    <span id="gridCount">グリッド数：-</span>
+    <span id="markerCount">記録数：0</span>
+    <span id="syncStatus">同期：未実行</span>
+  </footer>
+
+  <div id="markerModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+
+    <section class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2>マーキング登録</h2>
+        <button id="closeModalButton" class="icon-button" type="button">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="hint-box">
+          地図をタップした位置に記録します。登録後、Googleスプレッドシートにも送信します。
+        </div>
+
+        <form id="markerForm">
+          <input type="hidden" id="markerLat" />
+          <input type="hidden" id="markerLng" />
+
+          <label class="form-label">
+            種別
+            <select id="markerType" required>
+              <option value="通信可">通信可</option>
+              <option value="通信不安定">通信不安定</option>
+              <option value="通信不可">通信不可</option>
+              <option value="要確認">要確認</option>
+              <option value="危険箇所">危険箇所</option>
+            </select>
+          </label>
+
+          <label class="form-label">
+            登録者
+            <input id="markerUserName" type="text" placeholder="例：上松" />
+          </label>
+
+          <label class="form-label">
+            グリッド番号
+            <input id="markerGridId" type="text" readonly />
+          </label>
+
+          <label class="form-label">
+            地区名・目印
+            <input id="markerAreaName" type="text" placeholder="例：鵜沼、〇〇公園付近" />
+          </label>
+
+          <label class="form-label">
+            対応状況
+            <select id="markerStatus">
+              <option value="未対応">未対応</option>
+              <option value="確認済み">確認済み</option>
+              <option value="対応中">対応中</option>
+              <option value="解消">解消</option>
+            </select>
+          </label>
+
+          <label class="form-label">
+            メモ
+            <textarea id="markerMemo" rows="4" placeholder="例：建物内でIP無線が不安定。屋外は通信可。"></textarea>
+          </label>
+
+          <div class="coord-box">
+            <div>緯度：<span id="markerLatText">-</span></div>
+            <div>経度：<span id="markerLngText">-</span></div>
+          </div>
+
+          <div class="modal-actions">
+            <button id="cancelMarkerButton" class="secondary-button" type="button">
+              キャンセル
+            </button>
+            <button id="saveMarkerButton" class="primary-button" type="submit">
+              登録する
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div id="listModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop" id="listModalBackdrop"></div>
+
+    <section class="modal-card list-card" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h2>記録一覧</h2>
+        <button id="closeListModalButton" class="icon-button" type="button">×</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="list-actions">
+          <button id="exportJsonButton" class="secondary-button" type="button">
+            JSON確認
+          </button>
+          <button id="clearMarkersButton" class="danger-button" type="button">
+            端末内データ削除
+          </button>
+        </div>
+
+        <div class="hint-box">
+          「端末内データ削除」は、このブラウザ内の一時保存だけを削除します。スプレッドシートの行は削除しません。
+        </div>
+
+        <div id="markerList" class="marker-list">
+          記録はまだありません。
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+  <script src="./app.js"></script>
+</body>
+</html>

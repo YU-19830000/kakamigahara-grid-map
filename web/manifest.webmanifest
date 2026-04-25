@@ -1,0 +1,19 @@
+{
+  "name": "各務原市 1kmグリッドマップ",
+  "short_name": "グリッドMap",
+  "description": "各務原市の通信不感地帯調査用1kmグリッドマップ",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#102a43",
+  "theme_color": "#102a43",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

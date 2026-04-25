@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#102a43"></rect>
+  <path d="M96 154h320M96 256h320M96 358h320M154 96v320M256 96v320M358 96v320" stroke="#ffffff" stroke-width="18" stroke-linecap="round" opacity="0.9"></path>
+  <circle cx="354" cy="166" r="42" fill="#ff6b6b" stroke="#ffffff" stroke-width="12"></circle>
+  <text x="256" y="438" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#ffffff">GRID</text>
+</svg>
